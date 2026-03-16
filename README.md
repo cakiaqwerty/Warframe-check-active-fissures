@@ -11,9 +11,9 @@
 2. run .py
 
 Steel Path Omnia Void Cascade
--Active playstyle
--Most effective platinum farming -- ability to farm arcane and crack relic at the same time
--Test builds
+- Active playstyle
+- Most effective platinum farming -- ability to farm arcane and crack relic at the same time
+- Test builds
 
 # Future improvement:
 1. Turn into Discord bot
