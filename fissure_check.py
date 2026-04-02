@@ -45,30 +45,32 @@ def time_left(SolNode, fissure):
         print(f"{SolNode} | Time Remaining: {hours}h {minutes}m {seconds}s")
 
 Cascade = "SolNode232"
-check_fissure(Cascade)
+if not check_fissure(Cascade):
+    print(f"No active SP Cascade")
 
-LithCapture = "SolNode401"
-check_fissure(LithCapture, False)
+# LithCapture = "SolNode401"
+# check_fissure(LithCapture, False)
 
-LithExterminate = "SolNode400"
-check_fissure(LithExterminate, False)
+# LithExterminate = "SolNode400"
+# check_fissure(LithExterminate, False)
 
-MesoNeoCapture = "SolNode406"
-check_fissure(MesoNeoCapture, False)
+# MesoNeoCapture = "SolNode406"
+# check_fissure(MesoNeoCapture, False)
 
-MesoNeoExterminate = "SolNode407"
-check_fissure(MesoNeoExterminate, False)
+# MesoNeoExterminate = "SolNode407"
+# check_fissure(MesoNeoExterminate, False)
 
-# mission_list = [
-#     {"mission_type": "Cascade", "node_num": "SolNode232"},
-#     {"mission_type": "LithCapture", "node_num": "SolNode401"},
-#     {"mission_type": "LithExterminate", "node_num": "SolNode400"},
-#     {"mission_type": "MesoNeoCapture", "node_num": "SolNode406"},
-#     {"mission_type": "MesoNeoExterminate", "node_num": "SolNode407"},
-# ]
+mission_list = [
+    {"mission_type": "Cascade", "node_num": "SolNode232"},
+    {"mission_type": "LithCapture", "node_num": "SolNode401"},
+    {"mission_type": "LithExterminate", "node_num": "SolNode400"},
+    {"mission_type": "MesoNeoCapture", "node_num": "SolNode406"},
+    {"mission_type": "MesoNeoExterminate", "node_num": "SolNode407"},
+]
 
-# for mission in mission_list:
-#     check_fissure(mission["node_num"], False)
+for mission in mission_list[1:]:
+    if not check_fissure(mission["node_num"], False):
+        print(f"No active {mission["mission_type"]}")
 
 #Mission nodes: https://wiki.warframe.com/w/World_State#Node
 #Cascade = SolNode232

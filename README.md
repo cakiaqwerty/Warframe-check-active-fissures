@@ -1,6 +1,6 @@
 # Check if your favourite active fissures is currently active (SP Only / SP + Normal Path)
 Main purpose to play these missions is to crack relics at the same time while farming other stuff
-Currently have:
+## Currently have:
 1. Cascade -- Duhh
 2. Hepit -- Fast capture + Lith/Aya
 3. Teshub -- Fast exterminate + Lith/Aya
