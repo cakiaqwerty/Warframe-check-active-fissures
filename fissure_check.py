@@ -13,7 +13,11 @@ def check_fissure(SolNode, SP_Mode=True):
 
     for fissure in fissures:
         if SP_Mode:
-            if fissure.get("Node")==SolNode and fissure.get("Hard"):
+            if fissure.get("Node")==SolNode and fissure.get("Hard"): #SP Only
+                print (f"{SolNode} Steel Path Active")
+                time_left(SolNode, fissure)
+        else:
+            if fissure.get("Node")==SolNode: # SP+Normal Path
                 print (f"{SolNode} Active")
                 time_left(SolNode, fissure)
 
@@ -42,6 +46,29 @@ def time_left(SolNode, fissure):
 
 Cascade = "SolNode232"
 check_fissure(Cascade)
+
+LithCapture = "SolNode401"
+check_fissure(LithCapture, False)
+
+LithExterminate = "SolNode400"
+check_fissure(LithExterminate, False)
+
+MesoNeoCapture = "SolNode406"
+check_fissure(MesoNeoCapture, False)
+
+MesoNeoExterminate = "SolNode407"
+check_fissure(MesoNeoExterminate, False)
+
+# mission_list = [
+#     {"mission_type": "Cascade", "node_num": "SolNode232"},
+#     {"mission_type": "LithCapture", "node_num": "SolNode401"},
+#     {"mission_type": "LithExterminate", "node_num": "SolNode400"},
+#     {"mission_type": "MesoNeoCapture", "node_num": "SolNode406"},
+#     {"mission_type": "MesoNeoExterminate", "node_num": "SolNode407"},
+# ]
+
+# for mission in mission_list:
+#     check_fissure(mission["node_num"], False)
 
 #Mission nodes: https://wiki.warframe.com/w/World_State#Node
 #Cascade = SolNode232
