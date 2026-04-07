@@ -9,19 +9,20 @@ worldstate = response.json()
 # Get active fissures
 fissures = worldstate.get("ActiveMissions", [])
 
-def check_fissure(SolNode, SP_Mode=True):
+def check_fissure(mission, SP_Mode=True):
 
     for fissure in fissures:
         if SP_Mode:
-            if fissure.get("Node")==SolNode and fissure.get("Hard"): #SP Only
-                status = (f"{SolNode} Steel Path Active")
-                time_left(SolNode, fissure)
+            if fissure.get("Node")==mission["node_num"] and fissure.get("Hard"): #SP Only
+                status = (f"{mission["mission_type"]} Steel Path Active")
+                time_left = check_time_left(mission["node_num"], fissure)
                 return (status, time_left)
         else:
-            if fissure.get("Node")==SolNode: # SP+Normal Path
-                status = (f"{SolNode} Active")
-                time_left(SolNode, fissure)
+            if fissure.get("Node")==mission["node_num"]: # SP+Normal Path
+                status = (f"{mission["mission_type"]} Active")
+                time_left = check_time_left(mission["node_num"], fissure)
                 return (status, time_left)
+    return mission["mission_type"], None
 
         # print (mission.get("Node"), mission.get("MissionType"), mission.get("Hard"))
         # if fissure.get("Node") == "SolNode310":
@@ -31,7 +32,7 @@ def check_fissure(SolNode, SP_Mode=True):
         # if fissure.get("Node") == "SolNode310" and not fissure.get("Hard"):
         #     print ("Normal")
 
-def time_left(SolNode, fissure):
+def check_time_left(SolNode, fissure):
 
     # Get expiry time in milliseconds
     expiry_ms = int(fissure["Expiry"]["$date"]["$numberLong"])
@@ -44,23 +45,7 @@ def time_left(SolNode, fissure):
     if remaining.total_seconds() > 0:
         hours, remainder = divmod(int(remaining.total_seconds()), 3600)
         minutes, seconds = divmod(remainder, 60)
-        print(f"{SolNode} | Time Remaining: {hours}h {minutes}m {seconds}s")
-
-# Cascade = "SolNode232"
-# if not check_fissure(Cascade):
-#     print(f"No active SP Cascade")
-
-# LithCapture = "SolNode401"
-# check_fissure(LithCapture, False)
-
-# LithExterminate = "SolNode400"
-# check_fissure(LithExterminate, False)
-
-# MesoNeoCapture = "SolNode406"
-# check_fissure(MesoNeoCapture, False)
-
-# MesoNeoExterminate = "SolNode407"
-# check_fissure(MesoNeoExterminate, False)
+        return (f"Time Remaining: {hours}h {minutes}m {seconds}s")
 
 mission_list = [
     {"mission_type": "Void Cascade", "node_num": "SolNode232"},
@@ -73,12 +58,11 @@ mission_list = [
 ]
 
 for mission in mission_list:
-    if check_fissure(mission["node_num"], True) is None:
-        print (f"No active {mission["mission_type"]}")
-
-# for mission in mission_list[1:]:
-#     if not check_fissure(mission["node_num"], False):
-#         print(f"No active {mission["mission_type"]}")
+    mission_type, time_left = check_fissure(mission, False) #True = SP Only #False = SP + Normal Path
+    if time_left is None:
+        print (f"No active {mission_type}")
+    else:
+        print(f"{mission_type} | {time_left}")
 
 #Mission nodes: https://wiki.warframe.com/w/World_State#Node
 #Cascade = SolNode232
