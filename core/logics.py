@@ -9,10 +9,9 @@ modifier_map = {
     "VoidT6": "Omnia"
 }
 
-def time_end(fissure):
+def time_end(fissure_expiry_ms):
     # Get expiry time in milliseconds
-    expiry_ms = int(fissure["Expiry"]["$date"]["$numberLong"])
-    expiry_s = int(expiry_ms) // 1000
+    expiry_s = int(fissure_expiry_ms) // 1000
     
     return expiry_s
 
