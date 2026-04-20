@@ -9,21 +9,40 @@ INTERVAL = 5  # seconds
 
 
 def main():
+
+    already_alerted = set() # Store fissure_id
+
     while True:
         try:
+
+            print(already_alerted)
+
             fissures = get_fissures()
             for mission in TRACKED_MISSIONS:
                 for fissure in fissures:
+
+                    fissure_id = f"{fissure.get("Node")}--{fissure.get("Expiry")["$date"]["$numberLong"]}" # "SolNode111--123456789"
+
                     if SP_ONLY:
                         if fissure.get("Node")==mission["node_num"] and fissure.get("Hard"):
-                            mission_type, relic_tier, sp_status = match_fissure_details(mission, fissure)
 
-                            send_alert(f"🔥 Active fissure: {mission_type} | {relic_tier} | SP: {sp_status}\n Expire in: <t:{time_end(fissure)}:R>")
+                            if fissure_id not in already_alerted:
+
+                                mission_type, relic_tier, sp_status = match_fissure_details(mission, fissure)
+
+                                send_alert(f"🔥 Active fissure: {mission_type} | {relic_tier} | SP: {sp_status}\n Expire in: <t:{time_end(fissure)}:R>")
+
+                                already_alerted.add(fissure_id)
                     else:
                         if fissure.get("Node")==mission["node_num"]:
-                            mission_type, relic_tier, sp_status = match_fissure_details(mission, fissure)
 
-                            send_alert(f"🔥 Active fissure: {mission_type} | {relic_tier} | SP: {sp_status}\n Expire in: <t:{time_end(fissure)}:R>")
+                            if fissure_id not in already_alerted:
+
+                                mission_type, relic_tier, sp_status = match_fissure_details(mission, fissure)
+
+                                send_alert(f"🔥 Active fissure: {mission_type} | {relic_tier} | SP: {sp_status}\n Expire in: <t:{time_end(fissure)}:R>")
+
+                                already_alerted.add(fissure_id)
 
         except Exception as e:
             send_alert(f"⚠️ Error occurred: {e}")
