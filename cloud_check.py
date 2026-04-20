@@ -15,8 +15,6 @@ def main():
     while True:
         try:
 
-            print(already_alerted)
-
             current_time_ms =  int(time.time() * 1000)
             
             expired_ids = set()
