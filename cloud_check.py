@@ -5,58 +5,65 @@ from core.logics import time_end, match_fissure_details
 from config.tracked_missions import TRACKED_MISSIONS, SP_ONLY
 
 
-INTERVAL = 5  # seconds
+INTERVAL = 60  # seconds
 
 
 def main():
 
-    already_alerted = set() # Store fissure_id
+    already_alerted = {}
 
     while True:
         try:
 
             current_time_ms =  int(time.time() * 1000)
             
-            expired_ids = set()
+            expired_nodes = []
 
-            for fissure_id in already_alerted:
+            for node, expiry_ms in already_alerted.items():
 
-                expiry_ms = int(fissure_id.split("--")[1]) # "SolNode111--1776662404192" Grab expiry_ms on the right --
+                if expiry_ms + 60000 < current_time_ms: # 60 secs buffer
+                    expired_nodes.append(node)
 
-                if expiry_ms < current_time_ms:
-                    expired_ids.add(fissure_id)
-
-            # Remove expired_fissure from already_alerted
-            already_alerted -= expired_ids
-
-
+            for node in expired_nodes:
+                del already_alerted[node] # Remove expired from already_alerted
+            
             fissures = get_fissures()
+
             for mission in TRACKED_MISSIONS:
                 for fissure in fissures:
 
-                    fissure_expiry_ms = fissure.get("Expiry")["$date"]["$numberLong"]
-                    fissure_id = f"{fissure.get('Node')}--{fissure_expiry_ms}" # "SolNode111--1776662404192"
+                    node = fissure.get("Node")
 
                     if SP_ONLY:
-                        if fissure.get("Node")==mission["node_num"] and fissure.get("Hard"):
+                        if node != mission["node_num"]:
+                            continue
+                        if not fissure.get("Hard"):
+                            continue
 
-                            if fissure_id not in already_alerted:
-
-                                mission_type, relic_tier, sp_status = match_fissure_details(mission, fissure)
-
-                                send_alert(f"🔥 Active fissure: {mission_type} | {relic_tier} | SP: {sp_status}\n Expire in: <t:{time_end(fissure_expiry_ms)}:R>")
-
-                                already_alerted.add(fissure_id)
                     else:
-                        if fissure.get("Node")==mission["node_num"]:
+                        if node != mission["node_num"]:
+                            continue
+                    
+                    raw_expiry_ms = int(
+                        fissure["Expiry"]["$date"]["$numberLong"]
+                    )
 
-                            if fissure_id not in already_alerted:
+                    # Skip already alerted
+                    if node in already_alerted:
+                        continue
+                    
+                    mission_type, relic_tier, sp_status = (match_fissure_details(mission,fissure))
 
-                                mission_type, relic_tier, sp_status = match_fissure_details(mission, fissure)
+                    send_alert(
+                        f"🔥 Active fissure: "
+                        f"{mission_type} | "
+                        f"{relic_tier} | "
+                        f"SP: {sp_status}\n"
+                        f"Expire in: "
+                        f"<t:{time_end(raw_expiry_ms)}:R>"
+                    )
 
-                                send_alert(f"🔥 Active fissure: {mission_type} | {relic_tier} | SP: {sp_status}\n Expire in: <t:{time_end(fissure_expiry_ms)}:R>")
-
-                                already_alerted.add(fissure_id)
+                    already_alerted[node] = raw_expiry_ms
 
         except Exception as e:
             send_alert(f"⚠️ Error occurred: {e}")
