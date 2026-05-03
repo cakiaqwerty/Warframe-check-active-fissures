@@ -14,7 +14,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy to Oracle VM
+      - name: Deploy to Oracle Virtual Machine
         uses: appleboy/ssh-action@v1.0.3
 
         with:
@@ -23,6 +23,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
 
           script: |
-            cd /home/ubuntu/Warframe-check-active-fissures
-            git pull
+            cd ~/Warframe-check-active-fissures
+            git pull origin main
+
+            source venv/bin/activate
+            pip install -r requirements.txt
+
             sudo systemctl restart warframe-alert
