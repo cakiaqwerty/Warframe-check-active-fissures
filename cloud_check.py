@@ -59,7 +59,7 @@ def main():
                         f"{mission_type} | "
                         f"{relic_tier} | "
                         f"SP: {sp_status}\n"
-                        f"Expire in: "
+                        f"⏰ Expires in: "
                         f"<t:{time_end(raw_expiry_ms)}:R>"
                     )
 
