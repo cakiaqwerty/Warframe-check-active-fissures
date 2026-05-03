@@ -10,7 +10,7 @@ DISCORD_WEBHOOK_URL = <YOUR_DISCORD_WEBHOOK_API>
 3. Setup python virtual environment (venv)
 4. Active venv and install requirements.txt (inside venv)
 5. Test cloud_check.py manually to see if it's working
-6. Create a service file to run the cloud_check.py, make sure to run the .py inside venv/bin/
+6. Create a .service file to run the cloud_check.py, make sure to run the .py inside venv/bin/
 7. Reload systemd
 8. Start and enable the service to enable auto-start on boot
 9. Check the service logs for error if needed.
@@ -25,5 +25,9 @@ DISCORD_WEBHOOK_URL = <YOUR_DISCORD_WEBHOOK_API>
 6. Mot, Void -- Survival | Neo/Axi/Aya
 7. Belenus, Void -- Defense | Neo/Axi/Aya
 
-# Can be deployed onto Cloud Hosted VM for 24/7 Alert
+# Can be deployed onto VPS/Cloud for 24/7 usage
 ![Screenshot](img/Untitled.jpg)
+
+To improve:
+1. Containerize using Docker
+2. Optimisation, currently using nested for loop. In the future use hashmap(?)
