@@ -1,5 +1,14 @@
 # Monitor Warframe Worldstate API and Send Alert via Discord Webhook
 
+# Installation Option A: Docker
+## Basic knowledge using Docker is required
+
+1. `docker pull cakiaqwerty/warframe-fissure-alert`
+2. Create ENV file and paste `DISCORD_WEBHOOK_URL=<YOUR_DISCORD_WEBHOOK_API>`
+3. In the same directory as ENV file created, `docker run -d --name warframe-fissure-alert --env-file ENV --restart unless-stopped cakiaqwerty/warframe-fissure-alert:latest`
+
+# Installation Option B: Systemd Service File
+## Knowledge with Linux Systemd required.
 Create .env file containing:
 DISCORD_WEBHOOK_URL = <YOUR_DISCORD_WEBHOOK_API>
 
@@ -29,5 +38,5 @@ DISCORD_WEBHOOK_URL = <YOUR_DISCORD_WEBHOOK_API>
 ![Screenshot](img/Untitled.jpg)
 
 To improve:
-1. Containerize using Docker
+1. Allow custom tracked missions in Docker Images.
 2. Optimisation, currently using nested for loop. In the future use hashmap(?)
