@@ -3,9 +3,13 @@
 # Installation Option A: Docker
 ## Basic knowledge using Docker is required
 
-1. `docker pull cakiaqwerty/warframe-fissure-alert`
-2. Create ENV file and paste `DISCORD_WEBHOOK_URL=<YOUR_DISCORD_WEBHOOK_API>`
-3. In the same directory as ENV file created, `docker run -d --name warframe-fissure-alert --env-file ENV --restart unless-stopped cakiaqwerty/warframe-fissure-alert:latest`
+1. Git clone docker branch `git clone -b docker --single-branch https://github.com/cakiaqwerty/Warframe-check-active-fissures.git`
+2. The compose.yaml load `.env` from project root so
+3. Create `.env` file at project root and paste `DISCORD_WEBHOOK_URL=<YOUR_DISCORD_WEBHOOK_API>`
+4. In the project root, build/run in detached mode `docker compose -f docker/compose.yaml up --build -d` . Add `sudo` at the start if needed for permission.
+
+Optional:
+5. Edit tracked missions in config/tracked_missions.py
 
 # Installation Option B: Systemd Service File
 ## Knowledge with Linux Systemd required.
