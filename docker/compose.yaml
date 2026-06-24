@@ -1,0 +1,9 @@
+services:
+  cloud-check:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: cloud-check
+    env_file:
+      - ../.env
+    restart: unless-stopped
