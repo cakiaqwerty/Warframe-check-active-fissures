@@ -9,6 +9,6 @@ TRACKED_MISSIONS = [
     {"mission_type": "Ukko, Void", "node_num": "SolNode406"},
     {"mission_type": "Oxomoco, Void", "node_num": "SolNode407"},
     {"mission_type": "Mot, Void", "node_num": "SolNode409"},
-    {"mission_type": "Belenus, Void", "node_num": "SolNode408"}
+    {"mission_type": "Belenus, Void", "node_num": "SolNode408"},
     {"mission_type": "Kappa, Sedna", "node_num": "SolNode177"}
 ]
