@@ -37,6 +37,7 @@ DISCORD_WEBHOOK_URL = <YOUR_DISCORD_WEBHOOK_API>
 5. Oxomoco, Void -- Fast exterminate + Meso/Neo/Aya
 6. Mot, Void -- Survival | Neo/Axi/Aya
 7. Belenus, Void -- Defense | Neo/Axi/Aya
+8. Kappa, Sedna -- Disruption | Axi
 
 # Can be deployed onto VPS/Cloud for 24/7 usage
 ![Screenshot](img/Untitled.jpg)
